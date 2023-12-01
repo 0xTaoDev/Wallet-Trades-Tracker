@@ -23,3 +23,18 @@ SWAPS_HEX = {
         ]
     }
 }
+
+LINKS = {
+    "SCANS": {
+        "ETHEREUM": {
+            "MAKER": "https://etherscan.io/address/",
+            "TRANSACTION": "https://etherscan.io/tx/",
+            "TOKEN": "https://etherscan.io/token/"
+        }
+    },
+    "CHARTS": {
+        "ETHEREUM": {
+            "DEXSCREENER": "https://dexscreener.com/ethereum/"
+        }
+    }
+}
