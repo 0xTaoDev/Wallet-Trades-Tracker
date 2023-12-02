@@ -1,0 +1,8 @@
+.env/
+OnChain/__pycache__/
+Discord/__pycache__/__init__.cpython-311.pyc
+Discord/__pycache__/functions.cpython-311.pyc
+Telegram/__pycache__/__init__.cpython-311.pyc
+Telegram/__pycache__/functions.cpython-311.pyc
+Telegram/tempCodeRunnerFile.py
+tempCodeRunnerFile.py
