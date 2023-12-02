@@ -1,12 +1,10 @@
 from dotenv import load_dotenv
 import os
-import asyncio
 import requests
-
-from datetime import datetime
 
 
 load_dotenv(os.path.join(os.getcwd(), '.env\.env'))
+
 
 async def send_telegram_message(swap_infos: dict):
     
@@ -30,49 +28,7 @@ async def send_telegram_message(swap_infos: dict):
         "parse_mode": "HTML"
     }
     requests.post(url=url, data=payload)
-    
-    
-    
-swap_infos = {
-            "CHAIN": "ETHEREUM",
-            "MAKER_INFOS": {
-                "SHORT_ADDRESS": "0x45389...389543895438"
-            },
-            "LINKS": {
-                "SCAN": {
-                    "MAKER": "https://ether.com/0x4538945389543895438",
-                    "TRANSACTION": "https://google.com/0xfsdfsdfdssdf4538945389543895438"
-                }
-            },
-            "SWAPS": {
-                1: {
-                        "SYMBOLS": {
-                            "TOKEN0": "WETH",
-                                "TOKEN1": "PEPE"
-                        },
-                        "AMOUNTS": {
-                            "TOKEN0": "1.0",
-                            "TOKEN1": "434.43k"
-                        },
-                        "LINKS": {
-                            "CHART": "https://dexscreener.com/ethereum/0x11950d141ecb863f01007add7d1a342041227b58"
-                        }
-                },
-                2: {
-                        "SYMBOLS": {
-                            "TOKEN0": "WETH",
-                                "TOKEN1": "DARK"
-                        },
-                        "AMOUNTS": {
-                            "TOKEN0": "1.0",
-                            "TOKEN1": "434.43k"
-                        },
-                        "LINKS": {
-                            "CHART": "https://dexscreener.com/ethereum/0x11950d141ecb863f01007add7d1a342041227b58"
-                        }
-                }
-            }
-        }
+
 
 async def get_emoji_swap_id(swap_id: int):
     swap_id_emoji = (

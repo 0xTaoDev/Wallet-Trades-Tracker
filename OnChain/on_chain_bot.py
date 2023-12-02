@@ -1,5 +1,4 @@
 import asyncio
-import threading
 
 from web3 import Web3
 from web3.datastructures import AttributeDict
@@ -24,9 +23,10 @@ class OnChainBot():
         self.blockchain = blockchain
         self.verbose = verbose
         self.web3 = Web3(MultiProvider(c.RPCS[blockchain]))
-        print(f"\n[ONCHAIN BOT] [{self.blockchain}] [STARTED]")
+        if self.verbose is True:
+            print(f"[ONCHAINBOT] [{self.blockchain}] [STARTED]")
     
-    
+
     async def relayer(self, swap_infos: dict):
         await send_discord_webhook(swap_infos=swap_infos)
         await send_telegram_message(swap_infos=swap_infos)
@@ -48,7 +48,7 @@ class OnChainBot():
     
     
     async def process_transactions(self):
-        wallets = ["0xae2fc483527b8ef99eb5d9b44875f005ba1fae13"]
+        wallets = f.load_wallets(blockchain=self.blockchain)
         filtered_transactions = [
             transaction for transaction in self.transactions
             if transaction.get('from', '').lower() in [wallet.lower() for wallet in wallets]
