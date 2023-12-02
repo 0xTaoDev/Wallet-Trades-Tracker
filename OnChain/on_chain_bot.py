@@ -184,10 +184,10 @@ class OnChainBot():
                             
                             swap_num += 1
                             
-                            if self.verbose is True:
-                                print(f"\n[{self.blockchain}] [{swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}]\n> {swap_infos['LINKS']['SCAN']['TRANSACTION']}")
-                                for swap_id, swap_info in swap_infos['SWAPS'].items():
-                                    print(">", swap_id, "-", swap_info)
+            if self.verbose is True:
+                print(f"\n[{self.blockchain}] [{swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}]\n> {swap_infos['LINKS']['SCAN']['TRANSACTION']}")
+                for swap_id, swap_info in swap_infos['SWAPS'].items():
+                    print(">", swap_id, "-", swap_info)
             
             if is_tx_swap is True:
                 await self.relayer(swap_infos=swap_infos)

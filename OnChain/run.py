@@ -6,7 +6,7 @@ from OnChain.on_chain_bot import OnChainBot
 
 
 def start_on_chain_bot(blockchain: str):
-    on_chain_bot = OnChainBot(blockchain=blockchain, verbose=False)
+    on_chain_bot = OnChainBot(blockchain=blockchain, verbose=True)
     asyncio.run(on_chain_bot.run())
 
 
