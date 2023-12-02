@@ -17,7 +17,7 @@ Wallet Trades Tracker
 Wallet Trades Tracker is a tool that allows for **near-instant notifications whenever a wallet executes a swap on an EVM-compatible blockchain**.
 At this moment, **the tool only supports Ethereum** but you can easily add others EVM-compatible blockchains.
 
-Contact my for any inquiry
+Contact my for any inquiry<br>
 [![Discord](https://img.shields.io/badge/Discord-%237289DA.svg?logo=discord&logoColor=white)](https://discord.gg/_taodev_)
 [![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?logo=Twitter&logoColor=white)](https://twitter.com/_TaoDev_)
 
