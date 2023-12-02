@@ -53,7 +53,7 @@ To run the tool, you will **need to have at least Python 3.6 installed on your s
     TELEGRAM_BOT_TOKEN=""
     TELEGRAM_CHAT_ID=""
 ```
-4. Edit `wallets.txt` with your own wallets to track<br>*Format: BLOCKCHAIN:ADDRESS (e.g.:ETHEREUM:0xae2fc483527b8ef99eb5d9b44875f005ba1fae13)*
+4. Edit `wallets.txt` with your own wallets to track<br>Format: BLOCKCHAIN:ADDRESS (e.g.:ETHEREUM:0xae2fc483527b8ef99eb5d9b44875f005ba1fae13)
 5. Start the tool with `python run.py` inside main folder
 
 ## Screenshots 📸
