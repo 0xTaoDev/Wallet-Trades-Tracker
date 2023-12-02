@@ -57,9 +57,10 @@ To run the tool, you will **need to have at least Python 3.6 installed on your s
 
 ## Screenshots 📸
 
-<img src="images/image1.png"/>
-<img src="images/image2.png"/>
-<img src="images/image3.png"/>
+<p align="center">
+    <img src="images/image1.png"/>
+    <img src="images/image2.png"/>
+</p>
 
 ## Disclaimer ⚠️
 
