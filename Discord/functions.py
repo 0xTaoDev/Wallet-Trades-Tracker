@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 import os
-import sys
 
 from datetime import datetime
 import requests
@@ -24,17 +23,17 @@ async def send_discord_webhook(swap_infos: dict):
     
     for swap_id, swap_infos in swap_infos['SWAPS'].items():
         emoji_swap_id = await get_emoji_swap_id(swap_id=swap_id)
-        field_title = (
+        swap_title = (
             "\n\u200B\n" +
             f"{emoji_swap_id} SWAP {swap_infos['SYMBOLS']['TOKEN0']} » {swap_infos['SYMBOLS']['TOKEN1']}"
         )
-        field_value = (
+        swap_content = (
             f"**> :dollar: {swap_infos['AMOUNTS']['TOKEN0']} ${swap_infos['SYMBOLS']['TOKEN0']} » {swap_infos['AMOUNTS']['TOKEN1']} ${swap_infos['SYMBOLS']['TOKEN1']}\n" +
             f"> :bar_chart: [CHART/TRADING]({swap_infos['LINKS']['CHART']})\n**"
         ) 
         embed.add_field(
-            name=field_title,
-            value=field_value,
+            name=swap_title,
+            value=swap_content,
             inline=False
         )
         

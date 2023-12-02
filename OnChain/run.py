@@ -6,8 +6,9 @@ from OnChain.on_chain_bot import OnChainBot
 
 
 def start_on_chain_bot(blockchain):
-    bot = OnChainBot(blockchain=blockchain)
+    bot = OnChainBot(blockchain=blockchain, verbose=False)
     asyncio.run(bot.run())
+
 
 async def run_on_chain_bots():
     processes = []

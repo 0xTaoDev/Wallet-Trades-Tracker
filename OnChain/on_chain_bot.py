@@ -14,19 +14,22 @@ from OnChain import constants as c
 from OnChain import functions as f
 
 from Discord.functions import send_discord_webhook
+from Telegram.functions import send_telegram_message
 
 
 class OnChainBot():
     
     
-    def __init__(self, blockchain: str):
+    def __init__(self, blockchain: str, verbose: bool):
         self.blockchain = blockchain
+        self.verbose = verbose
         self.web3 = Web3(MultiProvider(c.RPCS[blockchain]))
         print(f"\n[ONCHAIN BOT] [{self.blockchain}] [STARTED]")
     
     
     async def relayer(self, swap_infos: dict):
         await send_discord_webhook(swap_infos=swap_infos)
+        await send_telegram_message(swap_infos=swap_infos)
         
         
     async def get_block_number(self):
@@ -91,7 +94,7 @@ class OnChainBot():
             swap_infos['LINKS']['SCAN']['TRANSACTION'] = c.LINKS['SCANS'][self.blockchain]['TRANSACTION'] + transaction_hash
             for tx_log in tx_logs:
                 for tx_log_topic in tx_log['topics']:
-                    for pool_type, pool_values in c.SWAPS_HEX[self.blockchain].items():
+                    for pool_type, pool_values in c.SWAPS_HEX.items():
                         if tx_log_topic in pool_values:
                             is_tx_swap = True
                             swap_data = tx_log['data'][2:]
@@ -181,9 +184,10 @@ class OnChainBot():
                             
                             swap_num += 1
                             
-                            print(f"\n[{self.blockchain}] [{swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}]\n> {swap_infos['LINKS']['SCAN']['TRANSACTION']}")
-                            for swap_id, swap_info in swap_infos['SWAPS'].items():
-                                print(">", swap_id, "-", swap_info)
+                            if self.verbose is True:
+                                print(f"\n[{self.blockchain}] [{swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}]\n> {swap_infos['LINKS']['SCAN']['TRANSACTION']}")
+                                for swap_id, swap_info in swap_infos['SWAPS'].items():
+                                    print(">", swap_id, "-", swap_info)
             
             if is_tx_swap is True:
                 await self.relayer(swap_infos=swap_infos)
@@ -196,7 +200,8 @@ class OnChainBot():
             current_block_number = await self.get_block_number()
             
             if current_block_number > latest_block_number:
-                print(f"\n[{self.blockchain}] [BLOCK {current_block_number}]")
+                if self.verbose is True:
+                    print(f"\n[{self.blockchain}] [BLOCK {current_block_number}]")
                 latest_block_number = current_block_number
                 self.block_number = current_block_number
                 self.transactions = await self.get_block_transactions()
