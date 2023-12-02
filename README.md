@@ -63,8 +63,9 @@ To run the tool, you will **need to have at least Python 3.6 installed on your s
     <img src="images/image2.png"/>
 </p>
 
-## License
-This project is licensed under the MIT license. Feel free to edit and distribute this template as you like.
+## License 🧾
+
+This project is licensed under the MIT license. Feel free to edit and distribute this template as you like.<br>
 See [LICENSE](LICENSE) for more information.
 
 ## Disclaimer ⚠️
