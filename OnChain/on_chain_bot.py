@@ -1,8 +1,9 @@
 import asyncio
+import threading
 
 from web3 import Web3
 from web3.datastructures import AttributeDict
-from web3.exceptions import BlockNotFound
+from web3.exceptions import BlockNotFound, TransactionNotFound
 
 from web3_multi_provider import MultiProvider
 
@@ -21,18 +22,18 @@ class OnChainBot():
     def __init__(self, blockchain: str):
         self.blockchain = blockchain
         self.web3 = Web3(MultiProvider(c.RPCS[blockchain]))
-        self.block_number = self.get_block_number()
+        print(f"\n[ONCHAIN BOT] [{self.blockchain}] [STARTED]")
     
     
-    def relayer(self, swap_infos: dict):
-        send_discord_webhook(swap_infos=swap_infos)
+    async def relayer(self, swap_infos: dict):
+        await send_discord_webhook(swap_infos=swap_infos)
         
         
-    def get_block_number(self):
+    async def get_block_number(self):
         return self.web3.eth.get_block_number()
     
     
-    def get_block_transactions(self):
+    async def get_block_transactions(self):
         while True:
             try:
                 block = self.web3.eth.get_block(self.block_number, full_transactions=True)
@@ -55,8 +56,15 @@ class OnChainBot():
         
     async def process_swaps_transactions(self, transaction: AttributeDict):
         transaction_hash = transaction.hash.hex()
-        # transaction_hash = "0x3a9f3cc511a4e9d2a6a8ad9df75f07ab08d73ea5c9761290d35c3879b79a8b75"
-        tx_infos = self.web3.eth.get_transaction_receipt(transaction_hash)
+        # transaction_hash = "0xef8e7334b81df1fdf6c81c23adb5dc6e411c611a215ac3dba44cc0d5271c7457"
+        while True:
+            try:
+                tx_infos = self.web3.eth.get_transaction_receipt(transaction_hash)
+                break
+            # If RPC provider not synchronized
+            except TransactionNotFound:
+                await asyncio.sleep(1)
+                
         from_address = transaction['from']
         # from_address = "0xae2Fc483527B8EF99EB5D9B44875F005ba1FaE13"
         tx_logs = tx_infos['logs']
@@ -128,29 +136,34 @@ class OnChainBot():
                                     
                             elif pool_type == "V3_POOL":
                                 def hex_to_decimal(hex_string: str):
-                                    # Convertir la chaîne hexadécimale en décimal
                                     decimal = int(hex_string, 16)
                                     
-                                    # Vérifier si le bit le plus significatif est défini (ce qui indiquerait un nombre négatif)
                                     if decimal & (1 << (len(hex_string) * 4 - 1)):
-                                        # Obtenir la représentation en complément à deux pour rendre le nombre négatif
                                         decimal = twos_complement(value=decimal, bit_length=len(hex_string) * 4)
                                     return decimal
 
                                 def twos_complement(value: int, bit_length: int):
-                                    # Calculer la représentation en complément à deux
                                     return value - (1 << bit_length)
 
                                 amount0 = hex_to_decimal(hex_string=swap_data[0:64])
                                 amount1 = hex_to_decimal(hex_string=swap_data[64:128])
                                 
-                                token0_amount = abs(amount0)
-                                token1_amount = abs(amount1)
-                                
-                                token0_symbol = tokens_infos['token0_symbol']
-                                token1_symbol = tokens_infos['token1_symbol']
-                                token0_decimals = tokens_infos['token0_decimals']
-                                token1_decimals = tokens_infos['token1_decimals']
+                                if amount0 > 0:    
+                                    token0_amount = abs(amount0)
+                                    token1_amount = abs(amount1)
+                                    
+                                    token0_symbol = tokens_infos['token0_symbol']
+                                    token1_symbol = tokens_infos['token1_symbol']
+                                    token0_decimals = tokens_infos['token0_decimals']
+                                    token1_decimals = tokens_infos['token1_decimals']
+                                elif amount0 < 0:
+                                    token0_amount = abs(amount1)
+                                    token1_amount = abs(amount0)
+                                    
+                                    token0_symbol = tokens_infos['token1_symbol']
+                                    token1_symbol = tokens_infos['token0_symbol']
+                                    token0_decimals = tokens_infos['token1_decimals']
+                                    token1_decimals = tokens_infos['token0_decimals']
                             
                             swap_infos['SWAPS'][swap_num] = {
                                 "SYMBOLS": {
@@ -173,18 +186,18 @@ class OnChainBot():
                                 print(">", swap_id, "-", swap_info)
             
             if is_tx_swap is True:
-                self.relayer(swap_infos=swap_infos)
+                await self.relayer(swap_infos=swap_infos)
       
                              
     async def run(self):
-        latest_block_number = self.get_block_number()
+        latest_block_number = await self.get_block_number()
         
         while True:
-            current_block_number = self.get_block_number()
+            current_block_number = await self.get_block_number()
             
             if current_block_number > latest_block_number:
                 print(f"\n[{self.blockchain}] [BLOCK {current_block_number}]")
                 latest_block_number = current_block_number
                 self.block_number = current_block_number
-                self.transactions = self.get_block_transactions()
+                self.transactions = await self.get_block_transactions()
                 await self.process_transactions()

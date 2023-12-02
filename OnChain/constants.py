@@ -5,10 +5,10 @@ from OnChain import functions as f
 
 RPCS = {
     "ETHEREUM": [
-        "https://eth.llamarpc.com",
-        "https://rpc.ankr.com/eth",
-        "https://rpc.mevblocker.io",
-        "https://rpc.flashbots.net"
+        "https://ethereum.publicnode.com"
+    ],
+    "BSC": [
+        "https://bsc-dataseed1.bnbchain.org"
     ]
 }
 

@@ -10,7 +10,7 @@ import discord
 load_dotenv(os.path.join(os.getcwd(), '.env\.env'))
 
 
-def send_discord_webhook(swap_infos: dict):
+async def send_discord_webhook(swap_infos: dict):
     embed = discord.Embed(
         title=f":sparkles: {swap_infos['CHAIN']} - {swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}",
         color=discord.Color.green(),
@@ -23,9 +23,10 @@ def send_discord_webhook(swap_infos: dict):
     )
     
     for swap_id, swap_infos in swap_infos['SWAPS'].items():
+        emoji_swap_id = await get_emoji_swap_id(swap_id=swap_id)
         field_title = (
             "\n\u200B\n" +
-            f"{get_emoji_swap_id(swap_id=swap_id)} SWAP {swap_infos['SYMBOLS']['TOKEN0']} » {swap_infos['SYMBOLS']['TOKEN1']}"
+            f"{emoji_swap_id} SWAP {swap_infos['SYMBOLS']['TOKEN0']} » {swap_infos['SYMBOLS']['TOKEN1']}"
         )
         field_value = (
             f"**> :dollar: {swap_infos['AMOUNTS']['TOKEN0']} ${swap_infos['SYMBOLS']['TOKEN0']} » {swap_infos['AMOUNTS']['TOKEN1']} ${swap_infos['SYMBOLS']['TOKEN1']}\n" +
@@ -40,7 +41,7 @@ def send_discord_webhook(swap_infos: dict):
     requests.post(os.getenv("DISCORD_WEBHOOK_URL"), json={"embeds": [embed.to_dict()]}, headers={'Content-Type': 'application/json'})
         
 
-def get_emoji_swap_id(swap_id: int):
+async def get_emoji_swap_id(swap_id: int):
     swap_id_emoji = (
         ":one:" if swap_id == 1 else
         ":two:" if swap_id == 2 else
