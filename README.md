@@ -20,6 +20,7 @@ At this moment, **the tool only supports Ethereum** but you can easily add other
 Contact my for any inquiry<br>
 [![Discord](https://img.shields.io/badge/Discord-%237289DA.svg?logo=discord&logoColor=white)](https://discord.gg/_taodev_)
 [![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?logo=Twitter&logoColor=white)](https://twitter.com/_TaoDev_)
+<br>Feel free to suggest new ideas to enhance and optimize the tool.
 
 ## How it works 🔬
 Each EVM-compatible blockchain bot will **scan each new block** to find wallets **matching those in the `wallets.txt`** file.
@@ -61,6 +62,10 @@ To run the tool, you will **need to have at least Python 3.6 installed on your s
     <img src="images/image1.png"/>
     <img src="images/image2.png"/>
 </p>
+
+## License
+This project is licensed under the MIT license. Feel free to edit and distribute this template as you like.
+See [LICENSE](LICENSE) for more information.
 
 ## Disclaimer ⚠️
 
