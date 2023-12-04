@@ -10,6 +10,12 @@ load_dotenv(os.path.join(os.getcwd(), '.env\.env'))
 
 
 async def send_discord_webhook(swap_infos: dict):
+    """
+    Posts a Discord message containing all the swap informations using Webhook URL specificed in specificed in .env/.env
+    
+    Parameters:
+        ``swap_infos (dict)``: dictionnary containing all the informations from the swap, e.g. tokens names, amounts swapped, transaction link...
+    """
     embed = discord.Embed(
         title=f":sparkles: {swap_infos['CHAIN']} - {swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}",
         color=discord.Color.green(),
@@ -40,7 +46,14 @@ async def send_discord_webhook(swap_infos: dict):
     requests.post(os.getenv("DISCORD_WEBHOOK_URL"), json={"embeds": [embed.to_dict()]}, headers={'Content-Type': 'application/json'})
         
 
-async def get_emoji_swap_id(swap_id: int):
+async def get_emoji_swap_id(swap_id: int) -> str:
+    """
+    Returns an emoji for the swap ID.
+    
+    Parameters:
+        ``swap_id (int)``: id of the swap
+    """
+    
     swap_id_emoji = (
         ":one:" if swap_id == 1 else
         ":two:" if swap_id == 2 else

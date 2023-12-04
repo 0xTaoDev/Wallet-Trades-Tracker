@@ -7,6 +7,12 @@ load_dotenv(os.path.join(os.getcwd(), '.env\.env'))
 
 
 async def send_telegram_message(swap_infos: dict):
+    """
+    Posts a Telegram message containing all the swap informations using the TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID specificed in .env/.env
+    
+    Parameters:
+        ``swap_infos (dict)``: dictionnary containing all the informations from the swap, e.g. tokens names, amounts swapped, transaction link...
+    """
     
     message = (
         f"✨ <a href='{swap_infos['LINKS']['SCAN']['TRANSACTION']}'>{swap_infos['CHAIN']} - {swap_infos['MAKER_INFOS']['SHORT_ADDRESS']}</a>\n" +
@@ -30,7 +36,14 @@ async def send_telegram_message(swap_infos: dict):
     requests.post(url=url, data=payload)
 
 
-async def get_emoji_swap_id(swap_id: int):
+async def get_emoji_swap_id(swap_id: int) -> str:
+    """
+    Returns an emoji for the swap ID.
+    
+    Parameters:
+        ``swap_id (int)``: id of the swap
+    """
+    
     swap_id_emoji = (
         "1️⃣" if swap_id == 1 else
         "2️⃣" if swap_id == 2 else

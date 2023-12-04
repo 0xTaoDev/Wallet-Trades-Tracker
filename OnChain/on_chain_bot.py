@@ -20,6 +20,14 @@ class OnChainBot():
     
     
     def __init__(self, blockchain: str, verbose: bool):
+        """
+        Initializes the on chain bot instance.
+        
+        Parameters:
+            ``blockchain (str)``: blockchain where on chain bot needs to run.
+            ``verbose (bool)``: Enable/Disable the verbose (on chain bot started, block creation, swap found)
+        """
+        
         self.blockchain = blockchain
         self.verbose = verbose
         self.web3 = Web3(MultiProvider(c.RPCS[blockchain]))
@@ -28,15 +36,28 @@ class OnChainBot():
     
 
     async def relayer(self, swap_infos: dict):
+        """
+        Executes different actions when a swap is found.
+        
+        Parameters:
+            ``swap_infos (dict)``: dictionnary containing all the informations from the swap, e.g. tokens names, amounts swapped, transaction link...
+        """
+        
         await send_discord_webhook(swap_infos=swap_infos)
         await send_telegram_message(swap_infos=swap_infos)
         
         
     async def get_block_number(self):
+        """
+        Returns blockchain block number.
+        """
         return self.web3.eth.get_block_number()
     
     
     async def get_block_transactions(self):
+        """
+        Returns block transactions.
+        """
         while True:
             try:
                 block = self.web3.eth.get_block(self.block_number, full_transactions=True)
@@ -48,6 +69,10 @@ class OnChainBot():
     
     
     async def process_transactions(self):
+        """
+        Filters wallets addresses in the block.
+        """
+        
         wallets = f.load_wallets(blockchain=self.blockchain)
         filtered_transactions = [
             transaction for transaction in self.transactions
@@ -58,6 +83,13 @@ class OnChainBot():
         
         
     async def process_swaps_transactions(self, transaction: AttributeDict):
+        """
+        Process swaps transactions.
+        
+        Parameters:
+            ``transaction (AttributeDict)``: transaction dictionnary containing all the informations.
+        """
+        
         transaction_hash = transaction.hash.hex()
         # transaction_hash = "0xef8e7334b81df1fdf6c81c23adb5dc6e411c611a215ac3dba44cc0d5271c7457"
         while True:
@@ -194,6 +226,10 @@ class OnChainBot():
       
                              
     async def run(self):
+        """
+        Creates a loop that will analyze each block created.
+        """
+        
         latest_block_number = await self.get_block_number()
         
         while True:
