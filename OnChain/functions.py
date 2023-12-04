@@ -6,7 +6,7 @@ def add_unit_to_bignumber(bignumber: Union[int, float]) -> str:
         Adds unit to the number, e.g. 1000000 -> "1.0M"
         
         Parameters:
-                ``bignumber (int or float)``: name of the blockchain, e.g. ETHEREUM
+                ``bignumber (int or float)``: amount
         """
         
         bignumber = float(bignumber)
