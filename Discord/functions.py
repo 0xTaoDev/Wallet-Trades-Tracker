@@ -42,8 +42,11 @@ async def send_discord_webhook(swap_infos: dict):
             value=swap_content,
             inline=False
         )
-        
-    requests.post(os.getenv("DISCORD_WEBHOOK_URL"), json={"embeds": [embed.to_dict()]}, headers={'Content-Type': 'application/json'})
+    
+    try:
+        requests.post(os.getenv("DISCORD_WEBHOOK_URL"), json={"embeds": [embed.to_dict()]}, headers={'Content-Type': 'application/json'})
+    except:
+        print("[!] Couldn't send discord webhook message.")
         
 
 async def get_emoji_swap_id(swap_id: int) -> str:

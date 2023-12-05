@@ -33,7 +33,11 @@ async def send_telegram_message(swap_infos: dict):
         "text": message,
         "parse_mode": "HTML"
     }
-    requests.post(url=url, data=payload)
+    
+    try:
+        requests.post(url=url, data=payload)
+    except:
+        print("[!] Couldn't send Telegram message.")
 
 
 async def get_emoji_swap_id(swap_id: int) -> str:

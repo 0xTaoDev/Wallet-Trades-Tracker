@@ -24,7 +24,7 @@ class OnChainBot():
         Initializes the on chain bot instance.
         
         Parameters:
-            ``blockchain (str)``: blockchain where on chain bot needs to run.
+            ``blockchain (str)``: blockchain where on chain bot needs to run.\n
             ``verbose (bool)``: Enable/Disable the verbose (on chain bot started, block creation, swap found)
         """
         
