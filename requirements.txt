@@ -1,5 +1,4 @@
+web3
 multicall
-web3-multi-provider
 discord.py
 python-dotenv
-web3
