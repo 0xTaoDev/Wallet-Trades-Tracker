@@ -1,5 +1,6 @@
 <h1 align="center">
 🔎 Wallet Trades Tracker 🔍
+<img src="https://github.com/0xtaodev/wallet-trades-tracker/blob/main/images/banner.jpg?raw=true" width="75%" height="75%">
 </h1>
 
 ---
