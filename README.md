@@ -57,6 +57,10 @@ To run the tool, you will **need these packages**
 4. Edit `wallets.txt` with your own wallets to track<br>Format: BLOCKCHAIN:ADDRESS (e.g.:ETHEREUM:0xae2fc483527b8ef99eb5d9b44875f005ba1fae13)
 5. Start the tool with `python run.py`
 
+## Known issues 🚩
+
+`ImportError: cannot import name 'getargspec' from 'inspect'` : you need to uninstall web3 and install it again in order to update it.
+
 ## Screenshots 📸
 
 <p align="center">
