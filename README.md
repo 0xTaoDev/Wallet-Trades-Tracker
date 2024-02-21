@@ -8,11 +8,11 @@
     <img src="https://img.shields.io/github/stars/0xtaodev/wallet-trades-tracker">
     <img src="https://img.shields.io/github/forks/0xtaodev/wallet-trades-tracker">
     <br>
-    <img src="https://img.shields.io/github/languages/top/0xtaodev/wallet-trades-tracker">
-    <img src="https://img.shields.io/github/last-commit/0xtaodev/wallet-trades-tracker">
-    <br>
-    <img src="https://img.shields.io/github/issues/0xtaodev/wallet-trades-tracker">
+    <img src="https://img.shields.io/github/issues/0xtaodev/wallet-trades-trackerk">
     <img src="https://img.shields.io/github/issues-closed/0xtaodev/wallet-trades-tracker">
+    <br>
+    <img src="https://img.shields.io/github/languages/top/0xtaodev/wallet-trades-trackerk">
+    <img src="https://img.shields.io/github/last-commit/0xtaodev/wallet-trades-tracker">
     <br>
 </p>
 
